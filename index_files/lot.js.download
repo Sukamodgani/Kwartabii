@@ -11,9 +11,9 @@ $(document).ready( function () {
   
   function ifnotSaved() {
   
-  var v = prompt('Unsay trabaho nimo??')
+  var v = prompt('Nganong naa ka diri????')
   
-  if (v == 'Sukamod') {
+  if (v == 'Mangitag kwarta') {
       //
     localStorage.setItem('status', 'browserSaved')
   } else {
