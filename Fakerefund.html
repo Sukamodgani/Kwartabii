@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Platform Refund Demo</title>
+<title>Fake Refund Error</title>
+<link rel="shortcut icon" href="https://avatars.cloudflare.steamstatic.com/272ffef991d4a9310249af4ae52f2a4ded261700_full.jpg" type="image/x-icon">
 
 <style>
 body {
@@ -11,9 +10,47 @@ body {
     background-color: #0f1b2a;
 }
 
+/* Profile Header */
+.profile {
+    width: 500px;
+    margin: 30px auto 0;
+    background: #1b2b3a;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-left {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.profile-name {
+    color: #c7d5e0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Refund Balance */
+.balance {
+    color: #66c0f4;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Refund Container */
 .container {
     width: 500px;
-    margin: 60px auto;
+    margin: 20px auto;
     background: #2c455c;
     padding: 25px;
     border-radius: 8px;
@@ -49,10 +86,6 @@ button {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-}
-
-button:hover {
-    background: #4fa4d6;
 }
 
 .message {
@@ -92,23 +125,39 @@ button:hover {
 
 <body>
 
+<!-- Profile Section -->
+<div class="profile">
+    <div class="profile-left">
+        <img src="https://avatars.akamai.steamstatic.com/e1dd59fdefd14c7e2b9f0cad71500ec25ee880d5_full.jpg">
+        <div class="profile-name">GalacticStorm </div>
+    </div>
+    <div class="balance">
+        Refund Balance: $100.00
+    </div>
+</div>
+
+<!-- Refund Form -->
 <div class="container">
     <h2>Request a Refund</h2>
 
     <form id="refundForm">
-        <label>Steam Username:</label>
-        <input type="text" required>
-        <label>Steam ID:</label>
-        <input type="text" required>
-        <label>Pending Refund:</label>
-        <input type="text" required>
+        <label>Steam ID:
+</label>
+        <input type="text" required="">
 
-        <label>Payment method:</label>
+        
+        
+
+        <label>Payment Refund:</label>
         <select>
             <option>Visa</option>
             <option>MasterCard</option>
-            <option>PayPal</option>
-        </select>
+            <option>American Express</option>
+        <option>PayPal</option></select>
+
+        
+        
+
         <button type="submit">Submit Refund Request</button>
     </form>
 
@@ -118,7 +167,7 @@ button:hover {
     </div>
 
     <div class="message error" id="errorBox">
-        ❌ ERROR: The user needs $1,000 Funds to be added on the User's Account to Verified the new "DATA" that has been encoded on Steam-User's Account.
+        ❌ ERROR: Refund request failed. Please try again later.
     </div>
 </div>
 
@@ -132,7 +181,6 @@ document.getElementById("refundForm").addEventListener("submit", function(e) {
     error.style.display = "none";
     loading.style.display = "block";
 
-    // Fake loading then error
     setTimeout(() => {
         loading.style.display = "none";
         error.style.display = "block";
@@ -140,5 +188,6 @@ document.getElementById("refundForm").addEventListener("submit", function(e) {
 });
 </script>
 
-</body>
-</html>
+
+
+</body></html>
