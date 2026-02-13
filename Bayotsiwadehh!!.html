@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bayot Si WADEH!</title>
+<link rel="shortcut icon" href="https://avatars.akamai.steamstatic.com/e1dd59fdefd14c7e2b9f0cad71500ec25ee880d5_full.jpg" type="image/x-icon">
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#1b2838;
+    color:#c7d5e0;
+}
+
+.container{
+    width:600px;
+    margin:80px auto;
+}
+
+/* TITLE */
+.page-title{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    font-size:28px;
+    font-weight:bold;
+    color:#66c0f4;
+    margin-bottom:25px;
+}
+
+.page-title img{
+    width:38px;
+    height:38px;
+}
+
+/* Valve text line */
+.valve-text{
+    margin-top:18px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#8f98a0;
+    font-size:14px;
+}
+
+.valve-text img{
+    width:20px;
+    opacity:0.7;
+}
+
+.profile-box{
+    background:linear-gradient(180deg,#16202d 0%, #101822 100%);
+    padding:15px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    margin-bottom:20px;
+    border:1px solid #000;
+}
+
+.profile-box img{
+    width:60px;
+    height:60px;
+    border-radius:6px;
+    margin-right:15px;
+}
+
+.refund-box{
+    background:linear-gradient(180deg,#16202d 0%, #101822 100%);
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 0 15px rgba(0,0,0,0.7);
+    border:1px solid #000;
+}
+
+.spinner{
+    display:none;
+    margin:20px auto;
+    width:35px;
+    height:35px;
+    border:4px solid #1a2a3a;
+    border-top:4px solid #66c0f4;
+    border-radius:50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0%{ transform:rotate(0deg); }
+    100%{ transform:rotate(360deg); }
+}
+
+.progress{
+    background:#0e141b;
+    border-radius:4px;
+    overflow:hidden;
+    margin:20px 0;
+    border:1px solid #000;
+}
+
+.progress-bar{
+    width:0%;
+    background:linear-gradient(to right,#4c91c2,#66c0f4);
+    padding:7px;
+    text-align:center;
+    font-size:13px;
+    color:#000;
+    font-weight:bold;
+    transition: width 0.1s linear;
+}
+
+.progress-stop{
+    background:linear-gradient(to right,#ff4d4d,#cc0000);
+    color:white;
+}
+
+.progress-complete{
+    background:linear-gradient(to right,#4caf50,#2ecc71);
+    color:white;
+}
+
+.input-group{
+    margin-bottom:20px;
+    position:relative;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    color:#8f98a0;
+}
+
+.amount-wrapper{
+    position:relative;
+}
+
+.amount-wrapper span{
+    position:absolute;
+    left:12px;
+    top:9px;
+    color:#8f98a0;
+}
+
+.amount-wrapper input{
+    width:93%;
+    padding:9px 9px 9px 28px;
+    border-radius:3px;
+    border:1px solid #000;
+    background:#0e141b;
+    color:white;
+}
+
+select{
+    width:100%;
+    padding:9px;
+    border-radius:3px;
+    border:1px solid #000;
+    background:#0e141b;
+    color:white;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:3px;
+    background:linear-gradient(to bottom,#75c7ff,#4fa3d1);
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.error-box{
+    display:none;
+    background:#5c0000;
+    border:1px solid #ff1a1a;
+    color:#ffd6d6;
+    padding:12px;
+    border-radius:5px;
+    margin-top:15px;
+    font-size:14px;
+    box-shadow:0 0 8px rgba(255,0,0,0.6);
+}
+
+.steam-popup{
+    position:fixed;
+    background:#fff;
+    color:#000;
+    padding:10px 14px 10px 40px;
+    border-radius:6px;
+    font-size:14px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.4);
+    display:none;
+    white-space:nowrap;
+    z-index:9999;
+}
+
+.steam-popup:before{
+    content:"!";
+    position:absolute;
+    left:10px;
+    top:50%;
+    transform:translateY(-50%);
+    width:20px;
+    height:20px;
+    background:#ff8c00;
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    line-height:20px;
+    border-radius:3px;
+}
+
+.steam-popup:after{
+    content:"";
+    position:absolute;
+    top:-8px;
+    left:25px;
+    border-width:8px;
+    border-style:solid;
+    border-color:transparent transparent #fff transparent;
+}
+
+.steam-footer{
+    margin-top:50px;
+    background:#171a21;
+    padding:25px 0;
+    border-top:1px solid #000;
+    font-size:12px;
+}
+
+.steam-footer-content{
+    width:600px;
+    margin:0 auto;
+    display:flex;
+    gap:15px;
+    align-items:flex-start;
+    color:rgba(143,152,160,0.75); /* faded base text */
+}
+
+.steam-footer-logo img{
+    width:96px;
+    opacity:0.7;
+    transition:opacity 0.3s ease;
+}
+
+.steam-footer-logo img:hover{
+    opacity:1;
+}
+
+.steam-footer-text{
+    line-height:1.6;
+    transition:color 0.3s ease;
+}
+
+.steam-footer a{
+    color:rgba(199,213,224,0.7);
+    text-decoration:none;
+    transition:color 0.25s ease;
+}
+
+.steam-footer a:hover{
+    color:#66c0f4;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="page-title">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg">
+Steam Refund Activation
+</div>
+
+<div class="profile-box">
+<img src="https://avatars.akamai.steamstatic.com/e1dd59fdefd14c7e2b9f0cad71500ec25ee880d5_full.jpg">
+<div>
+<div style="font-weight:bold;color:white;">GalacticStorm </div>
+<div style="font-size:15px;color:#8f98a0;">Steam ID: 76561198967678361</div>
+</div>
+</div>
+
+<div class="refund-box">
+
+<h2>Activation Process</h2>
+
+<div style="color:#66c0f4;margin-bottom:20px;">
+Add Funds: <b>$<span id="fundsAmount">0.00</span></b>
+</div>
+
+<div id="pendingRefundLine" style="color:#66c0f4;margin-bottom:20px; display:none;">
+Pending Refund: <b>$<span id="balanceAmount">0.00</span></b>
+</div>
+
+<div class="input-group" id="cardholderGroup" style="display:none;">
+<label>Cardholder's Name</label>
+<input type="text" id="cardholderName" placeholder="Enter cardholder name">
+<div class="steam-popup" id="cardPopup">Please fill out this field.</div>
+</div>
+
+<div class="input-group">
+<label>Funds Amount</label>
+<div class="amount-wrapper">
+<span>$</span>
+<input type="number" id="refundAmount" placeholder="Enter amount">
+</div>
+</div>
+
+<div class="input-group">
+<label>Refund Method</label>
+<select id="refundMethod" onchange="toggleCardholder()">
+<option>PayPal</option>
+<option>Visa</option>
+<option>MasterCard</option>
+<option>Discover</option>
+<option>American Express</option>
+</select>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar">0%</div>
+</div>
+
+<button onclick="submitRefund()">Submit Refund Request</button>
+
+<div class="spinner" id="spinner"></div>
+<div class="error-box" id="errorBox"></div>
+
+</div>
+<!-- ✅ Valve text + logo below refund box -->
+<div class="valve-text">
+© Valve Corporation.ᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠᅠ
+<img src="https://cdn.akamai.steamstatic.com/store/about/icon-steamos.svg">
+</div>
+
+</div>
+
+<script>
+let attempt = 0;
+let completedRun = false;
+
+function positionPopup(){
+    const input = document.getElementById("cardholderName");
+    const popup = document.getElementById("cardPopup");
+    const rect = input.getBoundingClientRect();
+    popup.style.top = (rect.bottom + 8) + "px";
+    popup.style.left = rect.left + "px";
+}
+
+function showPopup(){
+    const popup = document.getElementById("cardPopup");
+    popup.style.display = "block";
+    positionPopup();
+}
+
+window.addEventListener("resize", positionPopup);
+window.addEventListener("scroll", positionPopup);
+
+const cardInput = document.getElementById("cardholderName");
+const popup = document.getElementById("cardPopup");
+
+cardInput.addEventListener("input", ()=> popup.style.display="none");
+cardInput.addEventListener("focus", ()=> popup.style.display="none");
+
+document.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+        submitRefund();
+    }
+});
+
+function addFundsOnly(){
+    const amountInput = document.getElementById("refundAmount");
+    const fundsDisplay = document.getElementById("fundsAmount");
+
+    let amount = parseFloat(amountInput.value);
+    if(isNaN(amount) || amount <= 0) return;
+
+    let fundsBalance = parseFloat(fundsDisplay.innerText);
+    fundsBalance += amount;
+    fundsDisplay.innerText = fundsBalance.toFixed(2);
+}
+
+function addRefundOnly(){
+    const amountInput = document.getElementById("refundAmount");
+    const balanceDisplay = document.getElementById("balanceAmount");
+    const pendingLine = document.getElementById("pendingRefundLine");
+
+    let refundAmount = parseFloat(amountInput.dataset.lastAmount);
+    if(isNaN(refundAmount) || refundAmount <= 0) return;
+
+    pendingLine.style.display = "block";
+
+    let currentBalance = parseFloat(balanceDisplay.innerText);
+    currentBalance += refundAmount;
+    balanceDisplay.innerText = currentBalance.toFixed(2);
+
+    amountInput.value = "";
+}
+
+let cooldownActive = false;
+let cooldownTime = 3600; // 1 hour
+
+function submitRefund(){
+
+    const cardholderGroup = document.getElementById("cardholderGroup");
+    const cardholderName = document.getElementById("cardholderName");
+
+    if(cardholderGroup.style.display === "block"){
+        if(!cardholderName.value.trim()){
+            showPopup();
+            return;
+        }
+    }
+
+    const spinner = document.getElementById("spinner");
+    const errorBox = document.getElementById("errorBox");
+    const progressBar = document.getElementById("progressBar");
+    const amountInput = document.getElementById("refundAmount");
+
+    /* ✅ COOLDOWN STATE */
+    if(cooldownActive){
+
+    errorBox.style.display = "block";
+
+    const formatTime = (sec)=>{
+        let h = Math.floor(sec / 3600);
+        let m = Math.floor((sec % 3600) / 60);
+        let s = sec % 60;
+
+        return (
+            String(h).padStart(2,'0') + ":" +
+            String(m).padStart(2,'0') + ":" +
+            String(s).padStart(2,'0')
+        );
+    };
+
+    if(!window.cooldownInterval){
+
+        window.cooldownInterval = setInterval(()=>{
+
+            errorBox.textContent =
+            "⏳ ERROR: Please wait " + formatTime(cooldownTime) + " before next activation attempt.";
+
+            cooldownTime--;
+
+            if(cooldownTime < 0){
+                clearInterval(window.cooldownInterval);
+                window.cooldownInterval = null;
+                cooldownActive = false;
+                cooldownTime = 3600; // reset for next success
+            }
+
+        },1000);
+
+    }
+
+    return;
+}
+    if(!amountInput.value || parseFloat(amountInput.value) <= 0){
+        return;
+    }
+
+    amountInput.dataset.lastAmount = amountInput.value;
+
+    addFundsOnly();
+
+    attempt++;
+
+    spinner.style.display = "block";
+    errorBox.style.display = "none";
+
+    progressBar.classList.remove("progress-stop");
+    progressBar.style.width = "0%";
+    progressBar.innerText = "0%";
+
+    let progress = 0;
+    let stopPoint = null;
+
+    if(attempt === 1) stopPoint = 38;
+    else if(attempt === 2) stopPoint = 61;
+    else if(attempt === 3) stopPoint = 87;
+
+    const errorMessages = [
+        "⚠ ERROR: We cannot retrieve the User's account since there is missing information that prevents the database from retrieving the user's account. The Database needs an $200 Funds to process.",
+        "⚠ ERROR: The database has already found the missing information. We must increase the market transaction; that is why the Database need another funds worth $500. We are doing this so that the user's account will be immune to this case anymore.",
+        "⚠ ERROR: Security confirmation required. The System needs an $800 Funds to fix the Item Buying Process Data on the User's Account. However, there is a problem regarding the Item Buying Process Data. As such, The User's account is not capable of performing any transactions on Steam, such as trading, buying in the market, or purchasing in-game items."
+    ];
+    
+    function updateProgress(){
+
+        /* STOP PROGRESS */
+        if(stopPoint !== null && progress >= stopPoint){
+
+            spinner.style.display = "none";
+
+            progressBar.classList.add("progress-stop");
+            progressBar.style.width = stopPoint + "%";
+            progressBar.innerText = stopPoint + "%";
+
+            errorBox.textContent = errorMessages[attempt - 1];
+            errorBox.style.display = "block";
+
+            addRefundOnly();
+            return;
+        }
+
+        /* 4TH ATTEMPT FAIL */
+        if(attempt === 4 && progress >= 100){
+
+            spinner.style.display = "none";
+
+            progressBar.classList.add("progress-stop");
+            progressBar.style.width = "98%";
+            progressBar.innerText = "FAILED";
+
+            errorBox.textContent = "❌ FINAL ERROR: The Database needs $1,200 Funds to be added on the User's Account to verify the new DATA that has been encoded on Steam-User's Account. Make sure to inform the user out of discretion.";
+            errorBox.style.display = "block";
+
+            setTimeout(()=>{
+                progressBar.style.width = "92%";
+                progressBar.innerText = "92%";
+            },800);
+
+            addRefundOnly();
+            return;
+        }
+        
+        /* ⭐ 5TH ATTEMPT SUCCESS */
+        if(attempt === 5 && progress >= 100){
+
+            spinner.style.display = "none";
+
+            progressBar.classList.remove("progress-stop");
+            progressBar.classList.add("progress-complete");
+    
+            progressBar.style.width = "100%";
+            progressBar.innerText = "COMPLETED";
+
+            cooldownActive = true;
+
+            // Immediately trigger cooldown message
+            submitRefund();
+
+           return;
+        }
+
+        progress++;
+        progressBar.style.width = progress + "%";
+        progressBar.innerText = progress + "%";
+
+        setTimeout(updateProgress,20);
+    }
+
+    updateProgress();
+}
+
+function toggleCardholder(){
+    const method = document.getElementById("refundMethod").value;
+    const cardholder = document.getElementById("cardholderGroup");
+
+    if(method === "Visa" || method === "MasterCard" || method === "Discover" || method === "American Express"){ 
+        cardholder.style.display = "block";
+    } else {
+        cardholder.style.display = "none";
+    }
+}
+</script>
+<!-- STEAM STYLE FOOTER -->
+<div class="steam-footer">
+    <div class="steam-footer-content">
+
+        <span class="steam-footer-logo">
+            <img src="https://community.fastly.steamstatic.com/public/images/skin_1/footerLogo_valve.png" alt="Valve Logo">
+        </span>
+
+        <span class="steam-footer-text">
+            © Valve Corporation. All rights reserved. All trademarks are property of their respective owners in the US and other countries.<br>
+            Some geospatial data on this website is provided by 
+            <a href="http://www.geonames.org" target="_blank">geonames.org</a>.<br>
+
+            <span class="steam-footer-links">
+                <a href="https://store.steampowered.com/privacy_agreement/" target="_blank">Privacy Policy</a>
+                |
+                <a href="https://store.steampowered.com/legal/" target="_blank">Legal</a>
+                |
+                <a href="https://help.steampowered.com/faqs/view/10BB-D27A-6378-4436" target="_blank">Accessibility</a>
+                |
+                <a href="https://store.steampowered.com/subscriber_agreement/" target="_blank">Steam Subscriber Agreement</a>
+                |
+                <a href="https://store.steampowered.com/account/cookiepreferences/" target="_blank">Cookies</a>
+            </span>
+        </span>
+
+    </div>
+</div>
+
+</body>
+</html>
