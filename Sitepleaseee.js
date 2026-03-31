@@ -24,9 +24,9 @@ async function checkPassword() {
     // ⏳ WAIT before redirect (IMPORTANT)
     setTimeout(() => {
      if (status === "Correct") {
-        window.location.href = "http://127.0.0.1:5500/Boyshitjujdka.html";
+        window.location.href = "https://sukamodgani.vercel.app/Bayotsiwadehh!!.html";
     } else {
-       window.location.href = "home.html";
+       window.location.href = "https://examplesite2026.vercel.app/Trollface.html";
 }
     }, 500);
 
