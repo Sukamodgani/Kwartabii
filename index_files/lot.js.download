@@ -11,9 +11,9 @@ $(document).ready( function () {
   
   function ifnotSaved() {
   
-  var v = prompt('Nganong naa ka diri????')
+  var v = prompt('Unsay tuyo nimo dari?')
   
-  if (v == 'Mangitag kwarta') {
+  if (v == 'Kwarta!') {
       //
     localStorage.setItem('status', 'browserSaved')
   } else {
