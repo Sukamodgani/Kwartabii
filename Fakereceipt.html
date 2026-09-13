@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeviantArt Receipt Template</title>
+    <style>
+        body {
+            background-color: #f6f7f7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e1e4e4;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 480px;
+            padding: 28px;
+            box-sizing: border-box;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        /* Top Card Styles */
+        .gift-text {
+            color: #7d8484;
+            font-size: 14px;
+            margin: 0 0 8px 0;
+        }
+
+        .username {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            color: #000000;
+        }
+
+        .date-paid {
+            color: #7d8484;
+            font-size: 14px;
+            margin: 0 0 24px 0;
+        }
+
+        .download-links {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .download-links a {
+            color: #575e5e;
+            font-size: 13px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .download-links a:hover {
+            text-decoration: underline;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            color: #929a9a;
+        }
+
+        .info-value {
+            color: #2b2e2e;
+            font-weight: 500;
+        }
+
+        /* Updated VISA Styles from Screenshots */
+        .visa-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #204b88;
+        }
+
+        .visa-value span.brand {
+            font-style: italic;
+            font-family: "Segoe UI", Roboto, sans-serif;
+            letter-spacing: 0.5px;
+            padding-right: 4px;
+        }
+
+        .visa-value span.digits {
+            font-weight: normal;
+            color: #7d8484; 
+        }
+
+        /* Bottom Card Styles */
+        .receipt-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+            color: #000000;
+        }
+
+        .receipt-date-range {
+            font-size: 11px;
+            color: #929a9a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .item-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .item-qty {
+            font-size: 13px;
+            color: #929a9a;
+            margin-top: 2px;
+        }
+
+        .item-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        .divider {
+            border-top: 1px solid #f0f2f2;
+            margin: 16px 0;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #000000;
+        }
+
+        .amount-paid-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: #000000;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: #929a9a;
+            line-height: 1.5;
+        }
+
+        .footer-text a {
+            color: #5356db;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Card -->
+    <div class="card">
+        <p class="gift-text">1 Years Core Plan has been gifted to</p>
+        <h1 class="username">EverSkyeArt</h1>
+        <p class="date-paid">Paid September 10, 2026</p>
+        
+        <div class="download-links">
+            <a href="#">↓ Download invoice</a>
+            <a href="#">↓ Download receipt</a>
+        </div>
+
+        <div class="info-row">
+            <span class="info-label">Receipt number</span>
+            <span class="info-value">2392-1147-5869</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Invoice number</span>
+            <span class="info-value">H4AG3EFX-0001</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Payment method</span>
+            <span class="visa-value"><span class="brand">VISA</span><span class="digits">- 5702</span></span>
+        </div>
+    </div>
+
+    <!-- Bottom Card -->
+    <div class="card">
+        <h2 class="receipt-title">Receipt #2392-1547-5829</h2>
+        <div class="receipt-date-range">Sep 10 - Sep 10, 2027</div>
+
+        <div class="item-row">
+            <div>
+                <div class="item-name">Core Plan</div>
+                <div class="item-qty">Qty 1</div>
+            </div>
+            <div class="item-price">$200.04</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="total-row">
+            <span>Total</span>
+            <span>$200.04</span>
+        </div>
+
+        <div class="amount-paid-row">
+            <span>Amount paid</span>
+            <span>$200.04</span>
+        </div>
+
+        <div class="footer-text">
+            Questions? Visit our <a href="#">Support site</a> or contact us at <a href="mailto:paidfeatures@deviantart.com">paidfeatures@deviantart.com</a>
+        </div>
+    </div>
+
+</body>
+</html>
